@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ftec.projetoweb.TrabalhoCarrinho.api", "ftec.projetoweb.TrabalhoCarrinho.api\ftec.projetoweb.TrabalhoCarrinho.api.csproj", "{C132549D-F9A9-4C58-881D-08DACAF87AA6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Aplicacao", "Aplicacao", "{B2BC8C74-5308-4E30-A13C-812FAAF7A69C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dominio", "Dominio", "{7B467651-1D7A-4296-8607-6B06D6357DC2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Persistencia", "Persistencia", "{655ED5C4-AC4E-4115-A38B-40A3E31A5D4A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Servico", "Servico", "{B0695D75-CB0D-4D86-80F8-4F76583F3A8E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ftec.projetoweb.TrabalhoCarrinho.Persistencia", "ftec.projetoweb.TrabalhoCarrinho.Persistencia\ftec.projetoweb.TrabalhoCarrinho.Persistencia.csproj", "{2EE9DDBA-97EC-41E6-849F-419FA0995348}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ftec.projetoweb.TrabalhoCarrinho.Dominio", "ftec.projetoweb.TrabalhoCarrinho.Dominio\ftec.projetoweb.TrabalhoCarrinho.Dominio.csproj", "{A113FC41-D667-4700-91E3-1871BCE5B199}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ftec.projetoweb.TrabalhoCarrinho.Aplicacao", "ftec.projetoweb.TrabalhoCarrinho.Aplicacao\ftec.projetoweb.TrabalhoCarrinho.Aplicacao.csproj", "{3CB45EE3-A188-480B-BA2A-DBACDD63B891}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C132549D-F9A9-4C58-881D-08DACAF87AA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C132549D-F9A9-4C58-881D-08DACAF87AA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C132549D-F9A9-4C58-881D-08DACAF87AA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C132549D-F9A9-4C58-881D-08DACAF87AA6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EE9DDBA-97EC-41E6-849F-419FA0995348}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EE9DDBA-97EC-41E6-849F-419FA0995348}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EE9DDBA-97EC-41E6-849F-419FA0995348}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EE9DDBA-97EC-41E6-849F-419FA0995348}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A113FC41-D667-4700-91E3-1871BCE5B199}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A113FC41-D667-4700-91E3-1871BCE5B199}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A113FC41-D667-4700-91E3-1871BCE5B199}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A113FC41-D667-4700-91E3-1871BCE5B199}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3CB45EE3-A188-480B-BA2A-DBACDD63B891}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CB45EE3-A188-480B-BA2A-DBACDD63B891}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CB45EE3-A188-480B-BA2A-DBACDD63B891}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CB45EE3-A188-480B-BA2A-DBACDD63B891}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C132549D-F9A9-4C58-881D-08DACAF87AA6} = {B0695D75-CB0D-4D86-80F8-4F76583F3A8E}
+		{2EE9DDBA-97EC-41E6-849F-419FA0995348} = {655ED5C4-AC4E-4115-A38B-40A3E31A5D4A}
+		{A113FC41-D667-4700-91E3-1871BCE5B199} = {7B467651-1D7A-4296-8607-6B06D6357DC2}
+		{3CB45EE3-A188-480B-BA2A-DBACDD63B891} = {B2BC8C74-5308-4E30-A13C-812FAAF7A69C}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2D8F393A-6BD4-4549-B8AD-B63BA0342CCE}
+	EndGlobalSection
+EndGlobal

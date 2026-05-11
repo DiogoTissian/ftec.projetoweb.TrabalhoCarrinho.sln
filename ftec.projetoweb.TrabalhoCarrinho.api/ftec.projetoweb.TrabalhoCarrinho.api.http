@@ -1,0 +1,6 @@
+@ftec.projetoweb.TrabalhoCarrinho.api_HostAddress = http://localhost:5231
+
+GET {{ftec.projetoweb.TrabalhoCarrinho.api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
