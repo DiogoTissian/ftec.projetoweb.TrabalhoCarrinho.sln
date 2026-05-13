@@ -11,6 +11,8 @@
             this.StatusPedido = 0;
             this.TextoStatusPedido = string.Empty;
             this.ValorTotal = 0;
+            this.CEPEnderecoEntrega = string.Empty;
+            this.NumeroEnderecoEntrega = string.Empty;
         }
 
         public Guid Id { get; set; }
@@ -20,5 +22,7 @@
         public int StatusPedido { get; set; }
         public string TextoStatusPedido { get; set; }
         public decimal ValorTotal { get; set; }
+        public string CEPEnderecoEntrega { get; set; }
+        public string NumeroEnderecoEntrega { get; set; }
     }
 }
