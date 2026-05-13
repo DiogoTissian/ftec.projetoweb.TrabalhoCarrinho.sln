@@ -16,7 +16,7 @@ namespace ftec.projetoweb.TrabalhoCarrinho.Aplicacao.Adapter
 
             carrinho.UsuarioId = carrinhoDTO.UsuarioId;
             carrinho.Pedidos = PedidoAdapter.PedidoDTOTOPedido(carrinhoDTO.PedidosDTO);
-            carrinho.ValorTotal = carrinhoDTO.ValorTotal;
+            carrinho.ValorTotalCarrinho = carrinhoDTO.ValorTotalCarrinho;
 
             return carrinho;
         }
@@ -27,7 +27,7 @@ namespace ftec.projetoweb.TrabalhoCarrinho.Aplicacao.Adapter
 
             carrinhoDTO.UsuarioId = carrinho.UsuarioId;
             carrinhoDTO.PedidosDTO = PedidoAdapter.PedidoTOPedidoDTO(carrinho.Pedidos);
-            carrinhoDTO.ValorTotal = carrinho.ValorTotal;
+            carrinhoDTO.ValorTotalCarrinho = carrinho.ValorTotalCarrinho;
 
             return carrinhoDTO;
         }

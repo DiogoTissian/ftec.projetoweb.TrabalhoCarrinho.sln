@@ -40,37 +40,53 @@ namespace ftec.projetoweb.TrabalhoCarrinho.api.Controllers
                     string result = await response.Content.ReadAsStringAsync();
                     List<PedidoModel> pedidosUsuario = JsonSerializer.Deserialize<List<PedidoModel>>(result, options);
 
-                    double valor_total = 0;
-
-                    foreach (PedidoModel pedidoModel in pedidosUsuario)
+                    if (pedidosUsuario.Count > 0)
                     {
-                        if (pedidoModel.StatusPedido == 0)
+                        decimal valor_total_carrinho = 0;
+
+                        foreach (PedidoModel pedidoModel in pedidosUsuario)
                         {
-                            pedidoModel.TextoStatusPedido = "Pendente";
-                        }
-                        else if (pedidoModel.StatusPedido == 1)
-                        {
-                            pedidoModel.TextoStatusPedido = "Concluido";
-                        }
-                        else if (pedidoModel.StatusPedido == -1)
-                        {
-                            pedidoModel.TextoStatusPedido = "Cancelado";
+                            if (pedidoModel.StatusPedido == 0)
+                            {
+                                pedidoModel.TextoStatusPedido = "Pendente";
+                            }
+                            else if (pedidoModel.StatusPedido == 1)
+                            {
+                                pedidoModel.TextoStatusPedido = "Concluido";
+                            }
+                            else if (pedidoModel.StatusPedido == -1)
+                            {
+                                pedidoModel.TextoStatusPedido = "Cancelado";
+                            }
+                            else
+                            {
+                                throw new ApplicationException();
+                            }
+
+                            foreach (ProdutoModel produtoModel in pedidoModel.ProdutosModel)
+                            {
+                                if (produtoModel.Disponivel)
+                                {
+                                    pedidoModel.ValorTotal += produtoModel.Preco * produtoModel.Quantidade;
+                                }
+                            }
+
+                            valor_total_carrinho += pedidoModel.ValorTotal;
                         }
 
-                        //consulta api produto pelo valor
-                        valor_total += 1;
+                        CarrinhoModel carrinhoModel = new CarrinhoModel();
+                        carrinhoModel.UsuarioId = usuarioId;
+                        carrinhoModel.PedidosModel = pedidosUsuario;
+                        carrinhoModel.ValorTotalCarrinho = valor_total_carrinho;
+
+                        carrinhoAplicacao.DeletarCarrinhoValorTotalPedidosAntigos(usuarioId);
+                        carrinhoAplicacao.SalvarCarrinhoValorTotalPedidos(usuarioId, valor_total_carrinho);
+                        return Ok(carrinhoModel);
                     }
-
-
-                    CarrinhoModel carrinhoModel = new CarrinhoModel();
-                    carrinhoModel.UsuarioId = usuarioId;
-                    carrinhoModel.PedidosModel = pedidosUsuario;
-                    carrinhoModel.ValorTotal = valor_total;
-
-                    carrinhoAplicacao.DeletarCarrinhoValorTotalPedidosAntigos(usuarioId);
-                    carrinhoAplicacao.SalvarCarrinhoValorTotalPedidos(usuarioId, valor_total);
-
-                    return Ok(pedidosUsuario);
+                    else
+                    {
+                        return Ok("Usuário sem pedidos encontrados");
+                    }
                 }
                 else
                 {
@@ -80,6 +96,32 @@ namespace ftec.projetoweb.TrabalhoCarrinho.api.Controllers
             catch (Exception)
             {
                 return BadRequest("Erro ao carregar o carrinho");
+            }
+        }
+
+        [HttpPost("AtualizarStatusPedido")]
+        public async Task<IActionResult> PostAtualizarStatusPedido(AtualizacaoPedidoModel atualizacaoPedidoModel)
+        {
+            try
+            {
+                using HttpClient client = new HttpClient();
+
+                string url = $"{this.url_api_pedido}/AtualizarStatusPedido";
+
+                HttpResponseMessage response = await client.PutAsJsonAsync(url, atualizacaoPedidoModel);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return Ok("Pedido atualizado com sucesso");
+                }
+                else
+                {
+                    throw new ApplicationException();
+                }
+            }
+            catch (Exception)
+            {
+                return BadRequest("Erro ao atualizar o status do pedido");
             }
         }
 

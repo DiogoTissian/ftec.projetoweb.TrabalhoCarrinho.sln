@@ -6,11 +6,11 @@
         {
             this.UsuarioId = Guid.Empty;
             this.PedidosModel = new List<PedidoModel>();
-            this.ValorTotal = 0;
+            this.ValorTotalCarrinho = 0;
         }
 
         public Guid UsuarioId { get; set; }
         public List<PedidoModel> PedidosModel { get; set; }
-        public double ValorTotal { get; set; }
+        public decimal ValorTotalCarrinho { get; set; }
     }
 }

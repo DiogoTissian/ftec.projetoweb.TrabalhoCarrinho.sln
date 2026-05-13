@@ -20,7 +20,7 @@ namespace ftec.projetoweb.TrabalhoCarrinho.ExternalService
             this.strConexao = strConexao;
         }
 
-        public void SalvarCarrinhoValorTotalPedidos(Guid usuarioId, double valor_total)
+        public void SalvarCarrinhoValorTotalPedidos(Guid usuarioId, decimal valor_total_carrinho)
         {
             try
             {
@@ -31,12 +31,10 @@ namespace ftec.projetoweb.TrabalhoCarrinho.ExternalService
                     var sqlCommand = new NpgsqlCommand();
                     sqlCommand.Connection = conexao;
 
-                    Guid pedidoId = Guid.NewGuid();
-
                     sqlCommand.CommandText = "INSERT INTO carrinho (id, usuarioid, valor_total) VALUES (@id, @usuarioid, @valor_total)";
                     sqlCommand.Parameters.AddWithValue("id", Guid.NewGuid());
                     sqlCommand.Parameters.AddWithValue("usuarioid", usuarioId);
-                    sqlCommand.Parameters.AddWithValue("valor_total", valor_total);
+                    sqlCommand.Parameters.AddWithValue("valor_total", valor_total_carrinho);
                     sqlCommand.ExecuteNonQuery();
                 }
             }
@@ -57,10 +55,8 @@ namespace ftec.projetoweb.TrabalhoCarrinho.ExternalService
                     var sqlCommand = new NpgsqlCommand();
                     sqlCommand.Connection = conexao;
 
-                    Guid pedidoId = Guid.NewGuid();
-
                     sqlCommand.CommandText = "DELETE FROM carrinho WHERE usuarioid = @usuarioid";
-                    sqlCommand.Parameters.AddWithValue("usuarioid", usuarioId);
+                    sqlCommand.Parameters.AddWithValue("usuarioid", usuarioId.ToString());
                     sqlCommand.ExecuteNonQuery();
                 }
             }

@@ -10,6 +10,7 @@
             this.DataPedido = DateTime.MinValue;
             this.StatusPedido = 0;
             this.TextoStatusPedido = string.Empty;
+            this.ValorTotal = 0;
         }
 
         public Guid Id { get; set; }
@@ -18,5 +19,6 @@
         public DateTime DataPedido { get; set; }
         public int StatusPedido { get; set; }
         public string TextoStatusPedido { get; set; }
+        public decimal ValorTotal { get; set; }
     }
 }

@@ -12,11 +12,11 @@ namespace ftec.projetoweb.TrabalhoCarrinho.Aplicacao.DTO
         {
             this.UsuarioId = Guid.Empty;
             this.PedidosDTO = new List<PedidoDTO>();
-            this.ValorTotal = 0;
+            this.ValorTotalCarrinho = 0;
         }
 
         public Guid UsuarioId { get; set; }
         public List<PedidoDTO> PedidosDTO { get; set; }
-        public double ValorTotal { get; set; }
+        public decimal ValorTotalCarrinho { get; set; }
     }
 }

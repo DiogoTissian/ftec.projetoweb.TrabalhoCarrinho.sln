@@ -19,11 +19,11 @@ namespace ftec.projetoweb.TrabalhoCarrinho.Aplicacao
             pedidoRepositorio = new PedidoRepository(strConexao);
         }
 
-        public void SalvarCarrinhoValorTotalPedidos(Guid usuarioId, double valor_total)
+        public void SalvarCarrinhoValorTotalPedidos(Guid usuarioId, decimal valor_total_carrinho)
         {
             try
             {
-                pedidoRepositorio.SalvarCarrinhoValorTotalPedidos(usuarioId, valor_total);
+                pedidoRepositorio.SalvarCarrinhoValorTotalPedidos(usuarioId, valor_total_carrinho);
             }
             catch (Exception)
             {

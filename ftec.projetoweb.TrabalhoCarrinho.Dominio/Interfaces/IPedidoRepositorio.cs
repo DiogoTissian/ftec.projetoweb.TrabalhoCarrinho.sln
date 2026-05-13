@@ -9,7 +9,7 @@ namespace ftec.projetoweb.TrabalhoCarrinho.Dominio.Interfaces
 {
     public interface IPedidoRepositorio
     {
-        void SalvarCarrinhoValorTotalPedidos(Guid usuarioId, double valor_total);
+        void SalvarCarrinhoValorTotalPedidos(Guid usuarioId, decimal valor_total_carrinho);
         void DeletarCarrinhoValorTotalPedidosAntigos(Guid usuarioId);
     }
 }
