@@ -87,7 +87,7 @@ namespace ftec.projetoweb.TrabalhoCarrinho.api.Controllers
                         }
                         else
                         {
-                            return Ok("Busca pedidos usuário - Usuário sem pedidos encontrados");
+                            return BadRequest("Busca pedidos usuário - Usuário sem pedidos encontrados");
                         }
                     }
                     else
@@ -113,6 +113,16 @@ namespace ftec.projetoweb.TrabalhoCarrinho.api.Controllers
             {
                 if (atualizacaoPedidoModel != null)
                 {
+                    if (atualizacaoPedidoModel.PedidoId == null || atualizacaoPedidoModel.PedidoId == Guid.Empty)
+                    {
+                        return BadRequest("Atualizar Status Pedido - Erro ao atualizar o status do pedido. Id do pedido inválido");
+                    }
+
+                    if (atualizacaoPedidoModel.StatusPedido < -1 || atualizacaoPedidoModel.StatusPedido > 1)
+                    {
+                        return BadRequest("Atualizar Status Pedido - Erro ao atualizar o status do pedido. Status do pedido inválido");
+                    }
+
                     using HttpClient client = new HttpClient();
 
                     string url = $"{this.url_api_pedido}/AtualizarStatusPedido";
@@ -125,7 +135,7 @@ namespace ftec.projetoweb.TrabalhoCarrinho.api.Controllers
                     }
                     else
                     {
-                        return Ok("Atualizar Status Pedido - Erro ao atualizar o status do pedido");
+                        return BadRequest("Atualizar Status Pedido - Erro ao atualizar o status do pedido");
                     }
                 }
                 else
