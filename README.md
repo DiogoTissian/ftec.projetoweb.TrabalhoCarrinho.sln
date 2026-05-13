@@ -49,7 +49,82 @@ API construída em C# com o framework .NET Core
 | StatusPedido  | int  | Novo status do pedido que será atualizado: Pendente pagamento (0), Concluído (1) e Cancelado (-1)  |
 
 ### Endpoints
+- GET - api/Carrinho/{usuarioId} - Lista todos os pedidos salvos no banco de dados para o usuário definido (OK)
+
+Resposta:
+```
+{
+  "usuarioId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "pedidosModel": [
+    {
+      "id": "68353014-34b2-4859-8150-b7b3e0fd3d7c",
+      "usuarioId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "produtosModel": [
+        {
+          "id": "21226bb1-e99b-4009-93ff-5e41f94cc7d3",
+          "pedidoId": "68353014-34b2-4859-8150-b7b3e0fd3d7c",
+          "produtoId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+          "quantidade": 21,
+          "preco": 10,
+          "disponivel": false
+        },
+        {
+          "id": "d682b84a-1348-4458-9af3-67aaa369bf88",
+          "pedidoId": "68353014-34b2-4859-8150-b7b3e0fd3d7c",
+          "produtoId": "3fa85f64-5717-4562-b3fc-2c963f66af99",
+          "quantidade": 20,
+          "preco": 10,
+          "disponivel": false
+        }
+      ],
+      "dataPedido": "2026-05-13T00:00:00",
+      "statusPedido": -1,
+      "textoStatusPedido": "Cancelado",
+      "valorTotal": 410,
+      "cepEnderecoEntrega": "",
+      "numeroEnderecoEntrega": ""
+    }
+  ],
+  "valorTotalCarrinho": 410
+}
+```
+
+- POST - api/Carrinho/AtualizarStatusPedido - Atualizamos o status do pedido especificado (Pendente pagamento (0), Concluído (1) e Cancelado (-1)) (OK)
+
+Envio:
+```
+{
+  "pedidoId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "statusPedido": 0
+}
+```
+
+Resposta:
+```
+Pedido atualizado com sucesso
+```
+
+- DELETE - api/Carrinho/LimparCarrinho/{usuarioId} - Limpa o carrinho de um usuário específico (OK)
+
+Resposta:
+```
+Carrinho limpo com sucesso
+```
+
+- DELETE - api/Carrinho/DeletePedido/{pedidoId} - Remove um pedido específico (OK)
+
+Resposta:
+```
+Pedido removido com sucesso
+```
 
 ### Banco de dados
 - PostgreSQL
 - Scripts de criação de tabelas necessárias:
+```
+CREATE TABLE public.carrinho (
+	id varchar NULL,
+	usuarioid varchar NULL,
+	valor_total numeric NULL
+);
+```
