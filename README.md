@@ -46,9 +46,7 @@ API construída em C# com o framework .NET Core
 | Cmpo  | Tipo | Descrição |
 | ------------- | ------------- | ------------- |
 | PedidoId  | Guid  | Id do pedido que será atualizado  |
-| StatusPedido  | int  | Novo status do pedido que será atualizado  |
-| CEPEnderecoEntrega | string  | Descreve o novo CEP do endereço de entrega do pedido que será atualizado |
-| NumeroEnderecoEntrega | string  | Descreve o novo número do endereço de entrega do pedido que será atualizado |
+| StatusPedido  | int  | Novo status do pedido que será atualizado: Pendente pagamento (0), Concluído (1) e Cancelado (-1)  |
 
 ### Endpoints
 
