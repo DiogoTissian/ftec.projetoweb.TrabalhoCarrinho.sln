@@ -25,77 +25,84 @@ namespace ftec.projetoweb.TrabalhoCarrinho.api.Controllers
         {
             try
             {
-                using HttpClient client = new HttpClient();
-
-                string url = $"{this.url_api_pedido}/GetPedidosUsuario/{usuarioId.ToString()}";
-
-                HttpResponseMessage response = await client.GetAsync(url);
-
-                if (response.IsSuccessStatusCode)
+                if (usuarioId != null && usuarioId != Guid.Empty)
                 {
-                    var options = new JsonSerializerOptions
-                    {
-                        PropertyNameCaseInsensitive = true
-                    };
-                    string result = await response.Content.ReadAsStringAsync();
-                    List<PedidoModel> pedidosUsuario = JsonSerializer.Deserialize<List<PedidoModel>>(result, options);
+                    using HttpClient client = new HttpClient();
 
-                    if (pedidosUsuario.Count > 0)
-                    {
-                        decimal valor_total_carrinho = 0;
+                    string url = $"{this.url_api_pedido}/GetPedidosUsuario/{usuarioId.ToString()}";
 
-                        foreach (PedidoModel pedidoModel in pedidosUsuario)
+                    HttpResponseMessage response = await client.GetAsync(url);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var options = new JsonSerializerOptions
                         {
-                            if (pedidoModel.StatusPedido == 0)
-                            {
-                                pedidoModel.TextoStatusPedido = "Pendente";
-                            }
-                            else if (pedidoModel.StatusPedido == 1)
-                            {
-                                pedidoModel.TextoStatusPedido = "Concluido";
-                            }
-                            else if (pedidoModel.StatusPedido == -1)
-                            {
-                                pedidoModel.TextoStatusPedido = "Cancelado";
-                            }
-                            else
-                            {
-                                throw new ApplicationException();
-                            }
+                            PropertyNameCaseInsensitive = true
+                        };
+                        string result = await response.Content.ReadAsStringAsync();
+                        List<PedidoModel> pedidosUsuario = JsonSerializer.Deserialize<List<PedidoModel>>(result, options);
 
-                            foreach (ProdutoModel produtoModel in pedidoModel.ProdutosModel)
+                        if (pedidosUsuario.Count > 0)
+                        {
+                            decimal valor_total_carrinho = 0;
+
+                            foreach (PedidoModel pedidoModel in pedidosUsuario)
                             {
-                                if (produtoModel.Disponivel)
+                                if (pedidoModel.StatusPedido == 0)
                                 {
-                                    pedidoModel.ValorTotal += produtoModel.Preco * produtoModel.Quantidade;
+                                    pedidoModel.TextoStatusPedido = "Pendente";
                                 }
+                                else if (pedidoModel.StatusPedido == 1)
+                                {
+                                    pedidoModel.TextoStatusPedido = "Concluido";
+                                }
+                                else if (pedidoModel.StatusPedido == -1)
+                                {
+                                    pedidoModel.TextoStatusPedido = "Cancelado";
+                                }
+                                else
+                                {
+                                    throw new ApplicationException();
+                                }
+
+                                foreach (ProdutoModel produtoModel in pedidoModel.ProdutosModel)
+                                {
+                                    if (produtoModel.Disponivel)
+                                    {
+                                        pedidoModel.ValorTotal += produtoModel.Preco * produtoModel.Quantidade;
+                                    }
+                                }
+
+                                valor_total_carrinho += pedidoModel.ValorTotal;
                             }
 
-                            valor_total_carrinho += pedidoModel.ValorTotal;
+                            CarrinhoModel carrinhoModel = new CarrinhoModel();
+                            carrinhoModel.UsuarioId = usuarioId;
+                            carrinhoModel.PedidosModel = pedidosUsuario;
+                            carrinhoModel.ValorTotalCarrinho = valor_total_carrinho;
+
+                            carrinhoAplicacao.DeletarCarrinhoValorTotalPedidosAntigos(usuarioId);
+                            carrinhoAplicacao.SalvarCarrinhoValorTotalPedidos(usuarioId, valor_total_carrinho);
+                            return Ok(carrinhoModel);
                         }
-
-                        CarrinhoModel carrinhoModel = new CarrinhoModel();
-                        carrinhoModel.UsuarioId = usuarioId;
-                        carrinhoModel.PedidosModel = pedidosUsuario;
-                        carrinhoModel.ValorTotalCarrinho = valor_total_carrinho;
-
-                        carrinhoAplicacao.DeletarCarrinhoValorTotalPedidosAntigos(usuarioId);
-                        carrinhoAplicacao.SalvarCarrinhoValorTotalPedidos(usuarioId, valor_total_carrinho);
-                        return Ok(carrinhoModel);
+                        else
+                        {
+                            return Ok("Busca pedidos usuário - Usuário sem pedidos encontrados");
+                        }
                     }
                     else
                     {
-                        return Ok("Usuário sem pedidos encontrados");
+                        return BadRequest("Busca pedidos usuário - Problema ao consultar os pedidos");
                     }
                 }
                 else
                 {
-                    throw new ApplicationException();
+                    return BadRequest("Busca pedidos usuário - Id de usuário inválido");
                 }
             }
             catch (Exception)
             {
-                return BadRequest("Erro ao carregar o carrinho");
+                return BadRequest("Busca pedidos usuário - Erro ao carregar o carrinho do usuário");
             }
         }
 
@@ -104,24 +111,31 @@ namespace ftec.projetoweb.TrabalhoCarrinho.api.Controllers
         {
             try
             {
-                using HttpClient client = new HttpClient();
-
-                string url = $"{this.url_api_pedido}/AtualizarStatusPedido";
-
-                HttpResponseMessage response = await client.PutAsJsonAsync(url, atualizacaoPedidoModel);
-
-                if (response.IsSuccessStatusCode)
+                if (atualizacaoPedidoModel != null)
                 {
-                    return Ok("Pedido atualizado com sucesso");
+                    using HttpClient client = new HttpClient();
+
+                    string url = $"{this.url_api_pedido}/AtualizarStatusPedido";
+
+                    HttpResponseMessage response = await client.PutAsJsonAsync(url, atualizacaoPedidoModel);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return Ok("Atualizar Status Pedido - Pedido atualizado com sucesso");
+                    }
+                    else
+                    {
+                        return Ok("Atualizar Status Pedido - Erro ao atualizar o status do pedido");
+                    }
                 }
                 else
                 {
-                    throw new ApplicationException();
+                    return BadRequest("Atualizar Status Pedido - Dados recebidos para atualização de pedido corrompidos");
                 }
             }
             catch (Exception)
             {
-                return BadRequest("Erro ao atualizar o status do pedido");
+                return BadRequest("Atualizar Status Pedido - Erro ao atualizar o status do pedido");
             }
         }
 
@@ -130,24 +144,31 @@ namespace ftec.projetoweb.TrabalhoCarrinho.api.Controllers
         {
             try
             {
-                using HttpClient client = new HttpClient();
-
-                string url = $"{this.url_api_pedido}/DeletePedidos/{usuarioId.ToString()}";
-
-                HttpResponseMessage response = await client.DeleteAsync(url);
-
-                if (response.IsSuccessStatusCode)
+                if (usuarioId != null && usuarioId != Guid.Empty)
                 {
-                    return Ok("Carrinho limpo com sucesso");
+                    using HttpClient client = new HttpClient();
+
+                    string url = $"{this.url_api_pedido}/DeletePedidos/{usuarioId.ToString()}";
+
+                    HttpResponseMessage response = await client.DeleteAsync(url);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return Ok("Limpar Carrinho Usuário - Carrinho limpo com sucesso");
+                    }
+                    else
+                    {
+                        return BadRequest("Limpar Carrinho Usuário - Erro ao limpar o carrinho");
+                    }
                 }
                 else
                 {
-                    throw new ApplicationException();
+                    return BadRequest("Limpar Carrinho Usuário - Id de usuário inválido");
                 }
             }
             catch (Exception)
             {
-                return BadRequest("Erro ao limpar o carrinho");
+                return BadRequest("Limpar Carrinho Usuário - Erro ao limpar o carrinho");
             }
         }
 
@@ -156,24 +177,31 @@ namespace ftec.projetoweb.TrabalhoCarrinho.api.Controllers
         {
             try
             {
-                using HttpClient client = new HttpClient();
-
-                string url = $"{this.url_api_pedido}/{pedidoId.ToString()}";
-
-                HttpResponseMessage response = await client.DeleteAsync(url);
-
-                if (response.IsSuccessStatusCode)
+                if (pedidoId != null && pedidoId != Guid.Empty)
                 {
-                    return Ok("Pedido removido com sucesso");
+                    using HttpClient client = new HttpClient();
+
+                    string url = $"{this.url_api_pedido}/{pedidoId.ToString()}";
+
+                    HttpResponseMessage response = await client.DeleteAsync(url);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return Ok("Deletar Pedido - Pedido removido com sucesso");
+                    }
+                    else
+                    {
+                        return BadRequest("Deletar Pedido - Erro ao remover o pedido");
+                    }
                 }
                 else
                 {
-                    throw new ApplicationException();
+                    return BadRequest("Deletar Pedido - Id do pedido inválido");
                 }
             }
             catch (Exception)
             {
-                return BadRequest("Erro ao remover o pedido");
+                return BadRequest("Deletar Pedido - Erro ao remover o pedido");
             }
         }
     }
