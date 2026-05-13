@@ -35,12 +35,16 @@ API construída em C# com o framework .NET Core
 
 - Carrinho
 
+| Cmpo  | Tipo | Descrição |
+| ------------- | ------------- | ------------- |
 | UsuarioId  | Guid  | Id do usuário atrelado aos pedidos  |
 | PedidosModel  | Lista pedidos  | Lista contendo todos os pedidos do usuários  |
 | ValorTotalCarrinho  | decimal  | Valor total do carrinho, somando todos os pedidos do usuário  |
 
 - AtualizacaoPedido (entidade para atualizarmos algumas informações de um pedido através do carrinho)
 
+| Cmpo  | Tipo | Descrição |
+| ------------- | ------------- | ------------- |
 | PedidoId  | Guid  | Id do pedido que será atualizado  |
 | StatusPedido  | int  | Novo status do pedido que será atualizado  |
 | CEPEnderecoEntrega | string  | Descreve o novo CEP do endereço de entrega do pedido que será atualizado |
