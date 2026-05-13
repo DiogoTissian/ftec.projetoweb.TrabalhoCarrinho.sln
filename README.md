@@ -101,21 +101,21 @@ Envio:
 
 Resposta:
 ```
-Pedido atualizado com sucesso
+Atualizar Status Pedido - Pedido atualizado com sucesso
 ```
 
 - DELETE - api/Carrinho/LimparCarrinho/{usuarioId} - Limpa o carrinho de um usuário específico (OK)
 
 Resposta:
 ```
-Carrinho limpo com sucesso
+Limpar Carrinho Usuário - Carrinho limpo com sucesso
 ```
 
 - DELETE - api/Carrinho/DeletePedido/{pedidoId} - Remove um pedido específico (OK)
 
 Resposta:
 ```
-Pedido removido com sucesso
+Deletar Pedido - Pedido removido com sucesso
 ```
 
 ### Banco de dados
