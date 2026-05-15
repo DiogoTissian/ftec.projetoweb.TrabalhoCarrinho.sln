@@ -10,6 +10,7 @@
             this.Quantidade = 0;
             this.Preco = 0;
             this.Disponivel = false;
+            this.Excluido = false;
         }
 
         public Guid Id { get; set; }
@@ -18,5 +19,6 @@
         public int Quantidade { get; set; }
         public decimal Preco { get; set; }
         public bool Disponivel { get; set; }
+        public bool Excluido { get; set; }
     }
 }
