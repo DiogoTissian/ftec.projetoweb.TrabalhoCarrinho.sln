@@ -67,7 +67,7 @@ namespace ftec.projetoweb.TrabalhoCarrinho.api.Controllers
 
                                 foreach (ProdutoModel produtoModel in pedidoModel.ProdutosModel)
                                 {
-                                    if (produtoModel.Disponivel)
+                                    if (produtoModel.Disponivel && !produtoModel.Excluido)
                                     {
                                         pedidoModel.ValorTotal += produtoModel.Preco * produtoModel.Quantidade;
                                     }
